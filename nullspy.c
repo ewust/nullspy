@@ -3,6 +3,12 @@
 #include <linux/init.h>
 #include <linux/fs.h>
 
+static ssize_t
+nullspy_read(struct file *filp, char __user *buf,
+             size_t len, loff_t *off)
+{
+    return 0;
+}
 
 static ssize_t
 nullspy_write(struct file *filp, const char __user *buf,
@@ -12,7 +18,7 @@ nullspy_write(struct file *filp, const char __user *buf,
 }
 
 struct file_operations nullspy_fops = {
-    .read = NULL,
+    .read = nullspy_read,
     .write = nullspy_write,
     .open = NULL,
     .release = NULL
