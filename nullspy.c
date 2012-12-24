@@ -3,6 +3,12 @@
 #include <linux/init.h>
 #include <linux/fs.h>
 
+
+static int nullspy_major;
+#define NULLSPY_NAME "nullspy"
+static char *email = "ewust@umich.edu";
+module_param(email, charp, S_IRUGO);
+
 static ssize_t
 nullspy_read(struct file *filp, char __user *buf,
              size_t len, loff_t *off)
@@ -24,11 +30,6 @@ struct file_operations nullspy_fops = {
     .release = NULL
 };
 
-
-static int nullspy_major;
-#define NULLSPY_NAME "nullspy"
-
-
 static int __init nullspy_start(void)
 {
 
@@ -39,7 +40,6 @@ static int __init nullspy_start(void)
         return nullspy_major;
     }
     printk(KERN_INFO "Registered nullspy major %d\n", nullspy_major);
-
 
     return 0;
 }
